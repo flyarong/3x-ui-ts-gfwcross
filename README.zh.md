@@ -1,5 +1,3 @@
-# 3X-UI
-
 [English](/README.md) | [Chinese](/README.zh.md) | [Español](/README.es_ES.md)
 
 <p align="center"><a href="#"><img src="./media/3X-UI.png" alt="Image"></a></p>
@@ -16,7 +14,11 @@
 
 **如果此项目对你有用，请给一个**:star2:
 
-<p align="left"><a href="#"><img width="125" src="https://github.com/xeefei/3x-ui/assets/115543613/7aa895dd-048a-42e7-989b-afd41a74e2e1" alt="Image"></a></p>
+<p align="left">
+  <a href="https://buymeacoffee.com/xeefeiz" target="_blank">
+    <img src="./media/buymeacoffe.png" alt="Image">
+  </a>
+</p>
 
 - USDT (TRC20): `TYQEmQp1P65u9bG7KPehgJdvuokfb72YkZ`
 
@@ -28,10 +30,10 @@ bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh
 
 ## 安装指定版本
 
-若需要安装指定的版本，请将该版本添加到安装命令的末尾。 e.g., ver `v2.3.6`:
+若需要安装指定的版本，请将该版本添加到安装命令的末尾。 e.g., ver `v2.3.13`:
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh) v2.3.6
+bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh) v2.3.13
 ```
 
 ## SSL 认证

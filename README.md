@@ -1,5 +1,3 @@
-# 3X-UI
-
 <p align="center"><a href="#"><img src="./media/3X-UI.png" alt="Image"></a></p>
 
 **------------------一个更好的面板 • 基于Xray Core构建----------------**
@@ -12,7 +10,16 @@
 
 > **声明：** 此项目仅供个人学习、交流使用，请遵守当地法律法规，勿用于非法用途；请勿用于生产环境。
 
+> **注意：** 在使用此项目和〔教程〕过程中，若因违反以上声明使用规则而产生的一切后果由使用者自负。
+
 **如果此项目对你有用，请给一个**:star2:
+
+<p align="left">
+  <a href="https://buymeacoffee.com/xeefeiz" target="_blank">
+    <img src="./media/buymeacoffe.png" alt="Image">
+  </a>
+</p>
+
 - 赞助地址（USDT/TRC20）：`TYQEmQp1P65u9bG7KPehgJdvuokfb72YkZ`
 
 ## [【3X-UI】中文交流群：https://t.me/XUI_CN](https://t.me/XUI_CN)
@@ -24,7 +31,8 @@
 #### 1、最大限度地汉化了面板项目，更适合中文宝宝体质，包括：
 ##### ①优化在VPS中进行〔脚本安装过程〕的汉化提示，增加相应的安装中文提示，让中文用户能明白清楚自己安装到了哪个环节？在细节方面，增加了安装成功之后的〔用户设置信息〕提示，在脚本中加入〔面板登录地址〕显示，
 ##### ②管理后台进行了相应的〔图标和按钮〕汉化，让中文宝宝能够看得懂，
-##### ③安装成功后〔自动更改〕后台管理界面和电报机器人界面默认为〔中文〕；
+##### ③安装成功后〔自动更改〕后台管理界面和电报机器人界面默认为〔中文〕，
+##### ④在管理后台中〔设置证书处〕，增加了acme方式填入路径的提示；
 #### 2、优化了电报机器人响应〔按钮〕的名称和排序；
 #### 3、创建了〔3X-UI〕中文交流群，各位中文宝宝可以一起讨论交流；
 #### 4、管理后台中增加了〔实用导航〕页面，里面包含实用内容；
@@ -40,7 +48,8 @@
 ```
 bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh)
 ```
-#### 2、若你用的是之前F佬的x-ui或者其他分支版本，那直接覆盖安装的话，并不能确保一定就能够兼容？建议你先去备份〔数据库〕配置文件，再进行安装〔3X-UI优化版〕。
+#### 2、若你之前用的是Docker方式安装，那先进入容器里面/命令：docker exec -it 容器id /bin/sh，再执行以上脚本命令直接【覆盖安装】即可，
+#### 3、若你用的是之前F佬的x-ui或者其他分支版本，那直接覆盖安装的话，并不能确保一定就能够兼容？建议你先去备份〔数据库〕配置文件，再进行安装〔3X-UI优化版〕。
 
 
 ------------
@@ -85,7 +94,7 @@ bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh
 
 ------------
 ## 安装 & 升级
-- 使用3x-ui脚本一般情况下，安装完成创建入站之后，端口是默认关闭的，所以必须进入脚本选择【20】去放行端口
+- 使用3x-ui脚本一般情况下，安装完成创建入站之后，端口是默认关闭的，所以必须进入脚本选择【22】去放行端口
 - 要使用【自动续签】证书功能，也必须放行【80】端口，保持80端口是打开的，才会每3个月自动续签一次
 
 - 【全新安装】请执行以下脚本：
@@ -103,21 +112,20 @@ apt update -y&&apt install -y curl&&apt install -y socat
 - 在到这一步必须要注意：要保留旧设置的话，需要输入【n】
 ![11](./media/11.png)
 
-
 ------------
 ## 安装指定版本
 
-若要安装指定的版本，请将该版本添加到安装命令的末尾。 e.g., ver `v2.3.6`:
+若要安装指定的版本，请将该版本添加到安装命令的末尾。 e.g., ver `v2.4.0`:
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh) v2.3.6
+bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh) v2.4.0
 ```
 ------------
 ## 若你的VPS默认有防火墙，请在安装完成之后放行指定端口
 - 放行【面板登录端口】
 - 放行出入站管理协议端口
 - 如果要申请安装证书并每3个月【自动续签】证书，请确保80和443端口是放行打开的
-- 可通过此脚本的第【20】选项去安装防火墙进行管理，如下图：
+- 可通过此脚本的第【22】选项去安装防火墙进行管理，如下图：
 ![9](./media/9.png)
 - 若要一次性放行多个端口或一整个段的端口，用英文逗号隔开。
 #### PS：若你的VPS没有防火墙，则所有端口都是能够ping通的，可自行选择是否进入脚本安装防火墙保证安全，但安装了防火墙必须放行相应端口。
@@ -127,16 +135,16 @@ bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh
 #### PS：如果不需要以上功能或无域名，可以跳过这步，
 ##### 1、把自己的域名托管到CF，并解析到自己VPS的IP，不要开启【小云朵】，
 ##### 2、如果要申请安装证书并每3个月【自动续签】证书，请确保80和443端口是放行打开的，
-##### 3、输入x-ui命令进入面板管理脚本，通过选择第【16】选项去进行安装，
+##### 3、输入x-ui命令进入面板管理脚本，通过选择第【18】选项去进行安装，
 ##### 4、记录好已经安装证书的【路径】，位置在：/root/.acme.sh/（域名）_ecc，后续需要用到，
 ##### 5、进入后台【面板设置】—–>【常规】中，去分别填入刚才已经记录的证书公钥、私钥路径，
 ##### 6、点击左上角的【保存】和【重启面板】，即可用自己域名进行登录管理；也可按照后续方法实现【自己偷自己】。
 
 ------------
 ## 登录面板进行【常规】设置
-### 特别是如果在安装过程中，全部都是默认【回车键】安装的话，用户名/密码是随机的，而面板监听端口默认是2053，最好进入面板更改，
+### 特别是如果在安装过程中，全部都是默认【回车键】安装的话，用户名/密码/访问路径是随机的，而面板监听端口默认是2053，最好进入面板更改，
 ##### 1、填写自己想要设置的【面板监听端口】，并去登录SSH放行，
-##### 2、更改自己想要设置的【面板url根路径】，后续加上路径登录访问，
+##### 2、更改自己想要设置的【面板登录访问路径】，后续加上路径登录访问，
 ![25](./media/25.png)
 ##### 3、其他：安全设定和电报机器人等配置，可自行根据需求去进行设置，
 ##### 4、若申请了证书须填写证书公钥/私钥路径，建议配置电报机器人方便管理，
@@ -163,7 +171,7 @@ bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh
 #### 一、备份：通过配置好电报管理机器人，并去设置开启【自动备份】，每天凌晨12点会通过VPS管理机器人获取【备份配置】文件，有x-ui.db和config.json两个文件，可自行下载保存到自己电脑里面，
 ![14](./media/14.png)
 #### 二、搭建：在新的VPS中全新安装好3x-ui面板，通过脚本放行之前配置的所有端口，一次性放行多个端口请用【英文逗号】分隔，
-#### 三、若需要安装证书，则提前把域名解析到新的VPS对应的IP，并且去输入x-ui选择第【16】选项去安装，并记录公钥/私钥的路径，无域名则跳过这一步，
+#### 三、若需要安装证书，则提前把域名解析到新的VPS对应的IP，并且去输入x-ui选择第【18】选项去安装，并记录公钥/私钥的路径，无域名则跳过这一步，
 #### 四、恢复：SSH登录服务器找到/etc/x-ui/x-ui.db和/usr/local/x-ui/bin/config.json文件位置，上传之前的两个备份文件，进行覆盖，
 ![12](./media/12.png)
 ##### PS：把之前通过自动备份下载得到的两个文件上传覆盖掉旧文件，重启3x-ui面板即可【迁移成功】；即使迁移过程中出现问题，你是有备份文件的，不用担心，多试几次。
@@ -243,6 +251,28 @@ bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh
 <details>
   <summary>点击查看 SSL 认证</summary>
 
+### ACME
+
+要使用 ACME 管理 SSL 证书：
+
+1. 确保您的域名已正确解析到服务器，
+2. 输入“x-ui”命令并选择“SSL 证书管理”，
+3. 您将看到以下选项：
+
+   - **获取证书** ----获取SSL证书
+   - **吊销证书** ----吊销现有的SSL证书
+   - **续签证书** ----强制续签SSL证书
+
+### Certbot
+
+安装和使用 Certbot：
+
+```sh
+apt-get install certbot -y
+certbot certonly --standalone --agree-tos --register-unsafely-without-email -d yourdomain.com
+certbot renew --dry-run
+```
+
 ### Cloudflare
 
 管理脚本具有用于 Cloudflare 的内置 SSL 证书应用程序。若要使用此脚本申请证书，需要满足以下条件：
@@ -251,17 +281,18 @@ bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh
 - Cloudflare Global API Key
 - 域名已通过 cloudflare 解析到当前服务器
 
-**1:** 在终端中运行`x-ui`， 选择 `Cloudflare SSL Certificate`.
+**如何获取 Cloudflare全局API密钥:**
 
+1. 在终端中输入“x-ui”命令，然后选择“CF SSL 证书”。
+2. 访问链接: [Cloudflare API Tokens](https://dash.cloudflare.com/profile/api-tokens).
+3. 点击“查看全局 API 密钥”（如下图所示）：
+   ![](media/APIKey1.PNG)
+4. 您可能需要重新验证您的帐户。之后，将显示 API 密钥（请参见下面的屏幕截图）：
+   ![](media/APIKey2.png)
 
-### Certbot
-```
-apt-get install certbot -y
-certbot certonly --standalone --agree-tos --register-unsafely-without-email -d yourdomain.com
-certbot renew --dry-run
-```
+使用时，只需输入您的“域名”、“电子邮件”和“API KEY”即可。示意图如下：
+   ![](media/DetailEnter.png)
 
-***Tip:*** *管理脚本具有 Certbot 。使用 `x-ui` 命令， 选择 `SSL Certificate Management`.*
 
 </details>
 
@@ -329,26 +360,28 @@ systemctl restart x-ui
 
 #### 使用
 
-1. 安装Docker：
+
+1. **安装Docker**
 
    ```sh
    bash <(curl -sSL https://get.docker.com)
    ```
 
-2. 克隆仓库：
+
+2. **克隆项目仓库**
 
    ```sh
    git clone https://github.com/xeefei/3x-ui.git
    cd 3x-ui
    ```
 
-3. 运行服务：
+3. **启动服务**：
 
    ```sh
    docker compose up -d
    ```
 
-   或
+   **或**
 
    ```sh
    docker run -itd \
@@ -361,22 +394,22 @@ systemctl restart x-ui
       ghcr.io/xeefei/3x-ui:latest
    ```
 
-更新至最新版本
+4. **更新至最新版本**
 
    ```sh
-    cd 3x-ui
-    docker compose down
-    docker compose pull 3x-ui
-    docker compose up -d
+   cd 3x-ui
+   docker compose down
+   docker compose pull 3x-ui
+   docker compose up -d
    ```
 
-从Docker中删除3x-ui 
+5. **从Docker中删除3x-ui **
 
    ```sh
-    docker stop 3x-ui
-    docker rm 3x-ui
-    cd --
-    rm -r 3x-ui
+   docker stop 3x-ui
+   docker rm 3x-ui
+   cd --
+   rm -r 3x-ui
    ```
 
 </details>
@@ -418,7 +451,7 @@ systemctl restart x-ui
 
 ------------
 ## Languages
-
+  
 - English（英语）
 - Farsi（伊朗语）
 - Chinese（中文）
@@ -427,64 +460,70 @@ systemctl restart x-ui
 - Spanish（西班牙语）
 - Indonesian （印度尼西亚语）
 - Ukrainian（乌克兰语）
+- Turkish（土耳其语）
 
 ------------
-## Features
+## 项目特点
 
-- 系统状态监控
-- 在所有入站和客户端中搜索
-- 深色/浅色主题
+- 系统状态查看与监控
+- 可搜索所有入站和客户端信息
+- 深色/浅色主题随意切换
 - 支持多用户和多协议
 - 支持多种协议，包括 VMess、VLESS、Trojan、Shadowsocks、Dokodemo-door、Socks、HTTP、wireguard
 - 支持 XTLS 原生协议，包括 RPRX-Direct、Vision、REALITY
 - 流量统计、流量限制、过期时间限制
 - 可自定义的 Xray配置模板
-- 支持HTTPS访问面板（自建域名+SSL证书）
-- 支持一键式SSL证书申请和自动续费
-- 更多高级配置项目请参考面板
+- 支持HTTPS访问面板（自备域名+SSL证书）
+- 支持一键式SSL证书申请和自动续签证书
+- 更多高级配置项目请参考面板去进行设定
 - 修复了 API 路由（用户设置将使用 API 创建）
 - 支持通过面板中提供的不同项目更改配置。
 - 支持从面板导出/导入数据库
 
 ------------
-## 默认设置
+## 默认面板设置
 
 <details>
+
   <summary>点击查看 默认设置</summary>
 
-  ### 信息
+  ### 默认信息
 
-- **端口：** 2053
-- **用户名 & 密码：** 当您跳过设置时，此项会随机生成。
+- **端口** 
+    - 2053
+- **用户名 & 密码 & 访问路径** 
+    - 当您跳过设置时，这些信息会随机生成，
+    - 您也可以在安装的时候自定义访问路径。
 - **数据库路径：**
   - /etc/x-ui/x-ui.db
 - **Xray 配置路径：**
   - /usr/local/x-ui/bin/config.json
 - **面板链接（无SSL）：**
-  - http://ip:2053/panel
-  - http://domain:2053/panel
+  - http://ip:2053/访问路径/panel
 - **面板链接（有SSL）：**
-  - https://domain:2053/panel
- 
-</details>
+  - https://你的域名:2053/访问路径/panel
 
+</details>
 
 ------------
 ## [WARP 配置](https://gitlab.com/fscarmen/warp)
-
 
 <details>
   <summary>点击查看 WARP 配置</summary>
 
 #### 使用
 
-如果要在 v2.1.0 之前使用 WARP 路由，请按照以下步骤操作：
+**对于版本 `v2.1.0` 及更高版本：**
+
+WARP 是内置的，无需额外安装；只需在面板中打开必要的配置即可。
+
+**如果要在 v2.1.0 之前使用 WARP 路由**，请按照以下步骤操作：
 
 **1.** 在 **SOCKS Proxy Mode** 模式中安装Wrap
 
-   ```sh
-   bash <(curl -sSL https://raw.githubusercontent.com/hamid-gh98/x-ui-scripts/main/install_warp_proxy.sh)
-   ```
+   - **Account Type (free, plus, team):** Choose the appropriate account type.
+   - **Enable/Disable WireProxy:** Toggle WireProxy on or off.
+   - **Uninstall WARP:** Remove the WARP application.
 
 **2.** 如果您已经安装了 warp，您可以使用以下命令卸载：
 
@@ -497,8 +536,9 @@ systemctl restart x-ui
    配置:
 
    - Block Ads
-   - Route Google + Netflix + Spotify + OpenAI (ChatGPT) to WARP
+   - Route Google, Netflix, Spotify, and OpenAI (ChatGPT) traffic to WARP
    - Fix Google 403 error
+
 
 </details>
 
@@ -512,11 +552,11 @@ systemctl restart x-ui
 
 **注意：** 使用 IP 隧道时，IP 限制无法正常工作。
 
-- 适用于最高 `v1.6.1` ：
+- 对于 `v1.6.1`之前的版本 ：
 
   - IP 限制 已被集成在面板中。
 
-- 适用于 `v1.7.0` 以及更新的版本：
+- 对于 `v1.7.0` 以及更新的版本：
 
   - 要使 IP 限制正常工作，您需要按照以下步骤安装 fail2ban 及其所需的文件：
 
@@ -532,7 +572,8 @@ systemctl restart x-ui
       "dnsLog": false,
       "loglevel": "warning"
     },
-  ```
+    ```
+  - 您需要在Xray配置中手动设置〔访问日志〕的路径。
 
 </details>
 
@@ -618,6 +659,7 @@ Web 面板通过 Telegram Bot 支持每日流量、面板登录、数据库备�
 | `GET`  | `"/list"`                          | 获取所有入站                                 |
 | `GET`  | `"/get/:id"`                       | 获取所有入站以及inbound.id                   |
 | `GET`  | `"/getClientTraffics/:email"`      | 通过电子邮件获取客户端流量                    |
+| `GET`  | `"/getClientTrafficsById/:id"`     | 通过用户ID获取客户端流量                      |
 | `GET`  | `"/createbackup"`                  | Telegram 机器人向管理员发送备份               |
 | `POST` | `"/add"`                           | 添加入站                                    |
 | `POST` | `"/del/:id"`                       | 删除入站                                    |
@@ -633,11 +675,11 @@ Web 面板通过 Telegram Bot 支持每日流量、面板登录、数据库备�
 | `POST` | `"/delDepletedClients/:id"`        | 删除入站耗尽的客户端 （-1： all）             |
 | `POST` | `"/onlines"`                       | 获取在线用户 （ 电子邮件列表 ）               |
 
-\*- `clientId` 项应该使用下列数据
+- 使用`clientId` 项应该填写下列数据：
 
-- `client.id`  VMESS and VLESS
-- `client.password`  TROJAN
-- `client.email`  Shadowsocks
+- `client.id` for VMESS and VLESS
+- `client.password` for TROJAN
+- `client.email` for Shadowsocks
 
 
 - [API 文档](https://documenter.getpostman.com/view/16802678/2s9YkgD5jm)

@@ -1,5 +1,3 @@
-# 3X-UI
-
 [English](/README.md) | [Chinese](/README.zh.md) | [Español](/README.es_ES.md)
 
 <p align="center"><a href="#"><img src="./media/3X-UI.png" alt="Image"></a></p>
@@ -16,7 +14,11 @@
 
 **Si este proyecto te es útil, podrías considerar darle una**:star2:
 
-<p align="left"><a href="#"><img width="125" src="https://github.com/xeefei/3x-ui/assets/115543613/7aa895dd-048a-42e7-989b-afd41a74e2e1" alt="Image"></a></p>
+<p align="left">
+  <a href="https://buymeacoffee.com/xeefeiz" target="_blank">
+    <img src="./media/buymeacoffe.png" alt="Image">
+  </a>
+</p>
 
 - USDT (TRC20): `TYQEmQp1P65u9bG7KPehgJdvuokfb72YkZ`
 
@@ -29,10 +31,10 @@ bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh
 ## Instalar una Versión Personalizada
 
 
-Para instalar la versión deseada, agrega la versión al final del comando de instalación. Por ejemplo, ver `v2.3.6`:
+Para instalar la versión deseada, agrega la versión al final del comando de instalación. Por ejemplo, ver `v2.3.13`:
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh) v2.3.6
+bash <(curl -Ls https://raw.githubusercontent.com/xeefei/3x-ui/master/install.sh) v2.3.13
 ```
 
 ## Certificado SSL

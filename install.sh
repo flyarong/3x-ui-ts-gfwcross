@@ -40,6 +40,30 @@ arch() {
 
 echo ""
 echo -e "${yellow}---------->>>>>当前系统的架构为: $(arch)${plain}"
+echo ""
+last_version=$(curl -Ls "https://api.github.com/repos/xeefei/3x-ui/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+# 获取 x-ui 版本
+xui_version=$(/usr/local/x-ui/x-ui -v)
+
+# 检查 xui_version 是否为空
+if [[ -z "$xui_version" ]]; then
+    echo ""
+    echo -e "${red}------>>>当前服务器没有安装任何 x-ui 系列代理面板${plain}"
+    echo ""
+    echo -e "${green}-------->>>>片刻之后脚本将会自动引导安装〔3X-UI优化版〕${plain}"
+else
+    # 检查版本号中是否包含冒号
+    if [[ "$xui_version" == *:* ]]; then
+        echo -e "${green}---------->>>>>当前代理面板的版本为: ${red}其他 x-ui 分支版本${plain}"
+        echo ""
+        echo -e "${green}-------->>>>片刻之后脚本将会自动引导安装〔3X-UI优化版〕${plain}"
+    else
+        echo -e "${green}---------->>>>>当前代理面板的版本为: ${red}〔3X-UI优化版〕v${xui_version}${plain}"
+    fi
+fi
+echo ""
+echo -e "${yellow}---------------------->>>>>〔3X-UI优化版〕最新版为：${last_version}${plain}"
+sleep 4
 
 os_version=$(grep -i version_id /etc/os-release | cut -d \" -f2 | cut -d . -f1)
 
@@ -49,6 +73,8 @@ elif [[ "${release}" == "manjaro" ]]; then
     echo "您的操作系统是 Manjaro"
 elif [[ "${release}" == "armbian" ]]; then
     echo "您的操作系统是 Armbian"
+elif [[ "${release}" == "alpine" ]]; then
+    echo "您的操作系统是 Alpine Linux"
 elif [[ "${release}" == "opensuse-tumbleweed" ]]; then
     echo "您的操作系统是 OpenSUSE Tumbleweed"
 elif [[ "${release}" == "centos" ]]; then
@@ -89,6 +115,7 @@ else
     echo "- Arch Linux"
     echo "- Manjaro"
     echo "- Armbian"
+    echo "- Alpine Linux"
     echo "- AlmaLinux 9+"
     echo "- Rocky Linux 9+"
     echo "- Oracle Linux 8+"
@@ -111,6 +138,9 @@ install_base() {
     arch | manjaro)
         pacman -Syu && pacman -Syu --noconfirm wget curl tar tzdata
         ;;
+    alpine)
+        apk update && apk add --no-cache wget curl tar tzdata
+        ;;
     opensuse-tumbleweed)
         zypper refresh && zypper -q install -y wget curl tar timezone
         ;;
@@ -118,6 +148,12 @@ install_base() {
         apt-get update && apt install -y -q wget curl tar tzdata
         ;;
     esac
+}
+
+gen_random_string() {
+    local length="$1"
+    local random_string=$(LC_ALL=C tr -dc 'a-zA-Z0-9' </dev/urandom | fold -w "$length" | head -n 1)
+    echo "$random_string"
 }
 
 # This function will be called when user installed x-ui out of security
@@ -150,7 +186,7 @@ config_after_install() {
         if [[ ! -f "/etc/x-ui/x-ui.db" ]]; then
             local usernameTemp=$(head -c 6 /dev/urandom | base64)
             local passwordTemp=$(head -c 6 /dev/urandom | base64)
-            local webBasePathTemp=$(head -c 6 /dev/urandom | base64)
+            local webBasePathTemp=$(gen_random_string 10)
             /usr/local/x-ui/x-ui setting -username ${usernameTemp} -password ${passwordTemp} -webBasePath ${webBasePathTemp}
             echo -e "${yellow}检测到为全新安装，出于安全考虑将生成随机登录信息:${plain}"
             echo -e "###############################################"
@@ -158,9 +194,11 @@ config_after_install() {
             echo -e "${green}密  码: ${passwordTemp}${plain}"
             echo -e "${green}访问路径: ${webBasePathTemp}${plain}"
             echo -e "###############################################"
-            echo -e "${green}如果您忘记了登录信息，可以在安装后通过 x-ui 命令然后输入${red}数字 8 选项${green}进行查看${plain}"
+            echo -e "${green}如果您忘记了登录信息，可以在安装后通过 x-ui 命令然后输入${red}数字 10 选项${green}进行查看${plain}"
         else
-            echo -e "${green}此次操作属于版本升级，保留之前旧设置项，登录方式保持不变；如果您忘记了登录信息，您可以通过 x-ui 命令然后输入${red}数字 8 选项${green}进行查看${plain}"
+            echo -e "${green}此次操作属于版本升级，保留之前旧设置项，登录方式保持不变${plain}"
+            echo ""
+            echo -e "${green}如果您忘记了登录信息，您可以通过 x-ui 命令然后输入${red}数字 10 选项${green}进行查看${plain}"
             echo ""
             echo ""
         fi
@@ -253,7 +291,6 @@ install_x-ui() {
     systemctl daemon-reload
     systemctl enable x-ui
     systemctl start x-ui
-
     systemctl stop warp-go >/dev/null 2>&1
     wg-quick down wgcf >/dev/null 2>&1
     ipv4=$(curl -s4m8 ip.p3terx.com -k | sed -n 1p)
@@ -275,11 +312,13 @@ install_x-ui() {
     echo -e "x-ui stop         - 关闭 3x-ui 面板"
     echo -e "x-ui restart      - 重启 3x-ui 面板"
     echo -e "x-ui status       - 查看 3x-ui 状态"
+    echo -e "x-ui settings     - 查看当前设置信息"
     echo -e "x-ui enable       - 启用 3x-ui 开机启动"
     echo -e "x-ui disable      - 禁用 3x-ui 开机启动"
     echo -e "x-ui log          - 查看 3x-ui 运行日志"
     echo -e "x-ui banlog       - 检查 Fail2ban 禁止日志"
     echo -e "x-ui update       - 更新 3x-ui 面板"
+    echo -e "x-ui custom       - 自定义 3x-ui 版本"
     echo -e "x-ui install      - 安装 3x-ui 面板"
     echo -e "x-ui uninstall    - 卸载 3x-ui 面板"
     echo -e "--------------------------------------------"
@@ -292,7 +331,7 @@ install_x-ui() {
     # fi
     #    echo -e "请自行确保此端口没有被其他程序占用，${yellow}并且确保${red} ${config_port} ${yellow}端口已放行${plain}"
     sleep 3
-    echo -e ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+    echo -e ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
     echo ""
     echo -e "${yellow}----->>>3X-UI面板和Xray启动成功<<<-----${plain}"
 }
@@ -304,7 +343,7 @@ sleep 4
 info=$(/usr/local/x-ui/x-ui setting -show true)
 echo -e "${info}${plain}"
 echo ""
-echo -e "若您忘记了上述面板信息，后期可通过x-ui命令进入脚本${red}输入数字〔8〕选项获取${plain}"
+echo -e "若您忘记了上述面板信息，后期可通过x-ui命令进入脚本${red}输入数字〔10〕选项获取${plain}"
 echo ""
 echo -e "----------------------------------------------"
 echo ""

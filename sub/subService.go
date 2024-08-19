@@ -168,7 +168,7 @@ func (s *SubService) getLink(inbound *model.Inbound, email string) string {
 }
 
 func (s *SubService) genVmessLink(inbound *model.Inbound, email string) string {
-	if inbound.Protocol != model.VMess {
+	if inbound.Protocol != model.VMESS {
 		return ""
 	}
 	obj := map[string]interface{}{
@@ -281,6 +281,7 @@ func (s *SubService) genVmessLink(inbound *model.Inbound, email string) string {
 		}
 	}
 	obj["id"] = clients[clientIndex].ID
+	obj["scy"] = clients[clientIndex].Security
 
 	externalProxies, _ := stream["externalProxy"].([]interface{})
 
@@ -1007,9 +1008,36 @@ func (s *SubService) genRemark(inbound *model.Inbound, email string, extra strin
 			now := time.Now().Unix()
 			switch exp := stats.ExpiryTime / 1000; {
 			case exp > 0:
-				remark = append(remark, fmt.Sprintf("%d%s⏳", (exp-now)/86400, "Days"))
+				remainingSeconds := exp - now
+				days := remainingSeconds / 86400
+				hours := (remainingSeconds % 86400) / 3600
+				minutes := (remainingSeconds % 3600) / 60
+				if days > 0 {
+					if hours > 0 {
+						remark = append(remark, fmt.Sprintf("%dD,%dH⏳", days, hours))
+					} else {
+						remark = append(remark, fmt.Sprintf("%dD⏳", days))
+					}
+				} else if hours > 0 {
+					remark = append(remark, fmt.Sprintf("%dH⏳", hours))
+				} else {
+					remark = append(remark, fmt.Sprintf("%dM⏳", minutes))
+				}
 			case exp < 0:
-				remark = append(remark, fmt.Sprintf("%d%s⏳", exp/-86400, "Days"))
+				days := exp / -86400
+				hours := (exp % -86400) / 3600
+				minutes := (exp % -3600) / 60
+				if days > 0 {
+					if hours > 0 {
+						remark = append(remark, fmt.Sprintf("%dD,%dH⏳", days, hours))
+					} else {
+						remark = append(remark, fmt.Sprintf("%dD⏳", days))
+					}
+				} else if hours > 0 {
+					remark = append(remark, fmt.Sprintf("%dH⏳", hours))
+				} else {
+					remark = append(remark, fmt.Sprintf("%dM⏳", minutes))
+				}
 			}
 		}
 	}
